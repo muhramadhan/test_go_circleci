@@ -2,6 +2,7 @@ jobs:
   build:
     docker:
       - image: circleci/golang
+    working_directory: /tmp/project
     steps:
       - attach_workspace:
           at: /tmp/project/serverr
@@ -12,13 +13,14 @@ jobs:
   test:
     docker:
       - image: circleci/golang
+    working_directory: /tmp/project
     steps:
       - checkout
       - run: mkdir -p /tmp/project/server
       - run: go test
       - persist_to_workspace:
           root: /tmp/project
-          path: server
+          paths: server
       - run: ls server
 
 workflows:

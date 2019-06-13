@@ -16,7 +16,9 @@ jobs:
     working_directory: /tmp/project
     steps:
       - checkout
+      - run: mkdir -p /tmp/project/server
       - run: go test
+      - run: ls
       - persist_to_workspace:
           root: /tmp/project
           paths: server

@@ -5,7 +5,7 @@ jobs:
     working_directory: /tmp/project
     steps:
       - attach_workspace:
-          at: /tmp/project
+          at: /tmp/project/serverr
       - run: go build server.go
       - store_artifacts:
           path: /code
@@ -16,11 +16,12 @@ jobs:
     working_directory: /tmp/project
     steps:
       - checkout
-      - run: mkdir -p /tmp/project/
+      - run: mkdir -p /tmp/project/server
       - run: go test
-      - run: ls
       - persist_to_workspace:
           root: /tmp/project
+          path: server
+      - run: ls server
 
 workflows:
   version: 2

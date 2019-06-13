@@ -6,6 +6,7 @@ jobs:
     steps:
       - attach_workspace:
           at: /tmp/project
+      - run: ls
       - run: go build server.go
       - store_artifacts:
           path: /code
@@ -22,7 +23,6 @@ jobs:
           root: /tmp/project
           paths: 
             - ./
-      - run: ls server
 
 workflows:
   version: 2

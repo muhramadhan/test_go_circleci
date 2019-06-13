@@ -2,7 +2,6 @@ jobs:
   build:
     docker:
       - image: circleci/golang
-    working_directory: /tmp/project
     steps:
       - attach_workspace:
           at: /tmp/project/serverr
@@ -13,7 +12,6 @@ jobs:
   test:
     docker:
       - image: circleci/golang
-    working_directory: /tmp/project
     steps:
       - checkout
       - run: mkdir -p /tmp/project/server

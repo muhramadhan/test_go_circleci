@@ -14,10 +14,10 @@ jobs:
       - image: circleci/golang
     steps:
       - checkout
-      - run: mkdir -p /tmp/workspace
+      - run: mkdir -p tmp/workspace
       - run: go test
       - persist_to_workspace:
-          root: /tmp/workspace
+          root: tmp/workspace
 
 workflows:
   version: 2

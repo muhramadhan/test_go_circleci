@@ -18,7 +18,7 @@ jobs:
       - checkout
       - run: go test
       - persist_to_workspace:
-          root: /tmp/project
+          root: /tmp/workspace
           paths: 
             - server
       - run: ls server

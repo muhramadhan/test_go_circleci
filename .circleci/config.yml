@@ -6,10 +6,10 @@ jobs:
     steps:
       - attach_workspace:
           at: /tmp/project
-      - run: go build server.go
+      - run: go build server.go -o code
       - run: ls
       - store_artifacts:
-          path: ./
+          path: /code
 
   test:
     docker:

@@ -9,7 +9,7 @@ jobs:
       - run: go build -o code/server server.go
       - run: ls
       - store_artifacts:
-          path: /code
+          path: code/*
 
   test:
     docker:

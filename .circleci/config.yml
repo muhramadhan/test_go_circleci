@@ -47,7 +47,7 @@ jobs:
           command: |
             set PGPASSWORD=postgres
             sudo apt install postgresql-client
-            psql --host localhost -U postgres -d demo_circleci < populate.sql
+            psql --host localhost -U postgres < populate.sql
 
       - run: go test
       

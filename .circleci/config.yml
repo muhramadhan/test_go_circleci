@@ -5,9 +5,9 @@ jobs:
     working_directory: /tmp/project
     steps:
       - save_cache:
-        key: go-mod-v1-{{ checksum "go.sum" }}
-        paths:
-          - "/go/pkg/mod"
+          key: go-mod-v1-{{ checksum "go.sum" }}
+          paths:
+            - "/go/pkg/mod"
       - attach_workspace:
           at: /tmp/project
       - run: go build -o code/server server.go

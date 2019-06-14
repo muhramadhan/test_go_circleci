@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>Fail when not supplying userId</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>10b9b3d8-ab52-4f40-9e35-6a61730f1e10</testCaseGuid>
+</TestCaseEntity>

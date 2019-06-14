@@ -13,15 +13,47 @@ jobs:
   test:
     docker:
       - image: circleci/golang
+      - image: circleci/postgres:9.6-alpine
+      - image: katalonstudio/katalon
+        environment:
+          POSTGRES_USER: postgres
+          POSTGRES_DB: demo_circleci
     working_directory: /tmp/project
     steps:
       - checkout
       - run: mkdir -p /tmp/workspace
+      - run: go get github.com/lib/pq
+      - run: go get github.com/gorilla/mux
+
+      - run:
+          name: Waiting for Postgres to be ready
+          command: |
+            for i in `seq 1 10`;
+            do
+              nc -z localhost 5432 && echo Success && exit 0
+              echo -n .
+              sleep 1
+            done
+            echo Failed waiting for Postgres && exit 1
+
+      - run:
+          name: Seeding database
+          command: |
+            set PGPASSWORD=postgres
+            psql --host localhost -U postgres -d demo_circleci < populate.sql
+
       - run: go test
+      
+      - run:
+          name: Katalon Test
+          command: |
+            ./Katalon\ Studio.app/Contents/MacOS/katalon --args -noSplash  -runMode=console -consoleLog -projectPath="/Users/nakama/Katalon Studio/demo_circleci/demo_circleci.prj" -retry=0 -testSuiteCollectionPath="Test Suites/RegressionTest"
+
       - persist_to_workspace:
           root: /tmp/project
           paths: 
             - ./
+            - /go/github.com/*
 
 workflows:
   version: 2

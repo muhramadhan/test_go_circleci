@@ -46,6 +46,7 @@ jobs:
           name: Seeding database
           command: |
             set PGPASSWORD=postgres
+            sudo apt install postgresql-client
             psql --host localhost -U postgres -d demo_circleci < populate.sql
 
       - run: go test

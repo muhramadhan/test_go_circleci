@@ -4,6 +4,10 @@ jobs:
       - image: circleci/golang
     working_directory: /tmp/project
     steps:
+      - save_cache:
+        key: go-mod-v1-{{ checksum "go.sum" }}
+        paths:
+          - "/go/pkg/mod"
       - attach_workspace:
           at: /tmp/project
       - run: go build -o code/server server.go
@@ -24,7 +28,8 @@ jobs:
       - run: mkdir -p /tmp/workspace
       - run: go get github.com/lib/pq
       - run: go get github.com/gorilla/mux
-      - run: ls -a
+      - save_cache:
+        key: go-mod-v1-{{ checksum "go.sum" }}
 
       - run:
           name: Waiting for Postgres to be ready

@@ -24,7 +24,7 @@ jobs:
       - run: mkdir -p /tmp/workspace
       - run: go get github.com/lib/pq
       - run: go get github.com/gorilla/mux
-      - run: cp /go/github.com/ ./
+      - run: ls -a
 
       - run:
           name: Waiting for Postgres to be ready

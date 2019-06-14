@@ -24,6 +24,7 @@ jobs:
       - run: mkdir -p /tmp/workspace
       - run: go get github.com/lib/pq
       - run: go get github.com/gorilla/mux
+      - run: cp /go/github.com/ ./
 
       - run:
           name: Waiting for Postgres to be ready
@@ -47,7 +48,7 @@ jobs:
       - run:
           name: Katalon Test
           command: |
-            ./Katalon\ Studio.app/Contents/MacOS/katalon --args -noSplash  -runMode=console -consoleLog -projectPath="/Users/nakama/Katalon Studio/demo_circleci/demo_circleci.prj" -retry=0 -testSuiteCollectionPath="Test Suites/RegressionTest"
+            ./Katalon\ Studio.app/Contents/MacOS/katalon --args -noSplash  -runMode=console -consoleLog -projectPath="./demo_circleci.prj" -retry=0 -testSuiteCollectionPath="Test Suites/RegressionTest"
 
       - persist_to_workspace:
           root: /tmp/project

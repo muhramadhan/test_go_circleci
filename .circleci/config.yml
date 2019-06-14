@@ -54,7 +54,7 @@ jobs:
           root: /tmp/project
           paths: 
             - ./
-            - /go/github.com/*
+            - go/github.com/
 
 workflows:
   version: 2

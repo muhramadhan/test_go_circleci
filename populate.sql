@@ -14,20 +14,26 @@ CREATE DATABASE demo_circleci
 
 \c demo_circleci
 
--- SCHEMA: public
+-- Table: public."User"
 
--- DROP SCHEMA public ;
+-- DROP TABLE public."User";
 
-CREATE SCHEMA public
-    AUTHORIZATION postgres;
+CREATE TABLE public."User"
+(
+    id integer NOT NULL DEFAULT nextval('"User_id_seq"'::regclass),
+    nama character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    email character varying(25) COLLATE pg_catalog."default",
+    CONSTRAINT "User_pkey" PRIMARY KEY (id),
+    CONSTRAINT unique_email UNIQUE (email)
 
-COMMENT ON SCHEMA public
-    IS 'standard public schema';
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
 
-GRANT ALL ON SCHEMA public TO postgres;
-
-GRANT ALL ON SCHEMA public TO PUBLIC;
-
+ALTER TABLE public."User"
+    OWNER to postgres;
 
 INSERT INTO public."User"(
 	nama, email)

@@ -13,7 +13,7 @@ jobs:
           at: /tmp/project
       - restore_cache:
           key: go-mod-v1-{{ checksum "go.sum" }}
-      - run: apt update && apt install netcat curl
+      - run: apt update && apt install -y git netcat curl
       - run:
           name: Waiting for Postgres to be ready
           command: |

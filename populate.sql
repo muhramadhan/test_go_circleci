@@ -5,10 +5,12 @@
 CREATE DATABASE demo_circleci
     WITH 
     OWNER = postgres
+    ENCODING = 'UTF8'
     LC_COLLATE = 'C'
     LC_CTYPE = 'C'
     TABLESPACE = pg_default
-    CONNECTION LIMIT = -1;
+    CONNECTION LIMIT = -1
+	TEMPLATE template0;
 
 \c demo_circleci
 

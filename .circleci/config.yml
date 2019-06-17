@@ -35,7 +35,7 @@ jobs:
       - run:
           name: Run server in background
           command: |
-            ./code/server
+            ./code/server &
 
       - run:
           name: Waiting for server to be ready

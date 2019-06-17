@@ -11,22 +11,24 @@ CREATE DATABASE demo_circleci
     TABLESPACE = pg_default
     CONNECTION LIMIT = -1;
 
-INSERT INTO User(
+\c demo_circleci
+
+INSERT INTO public."User"(
 	nama, email)
 	VALUES ('aaaa', 'aaaa@gmail.com');
 	
-INSERT INTO User(
+INSERT INTO public."User"(
 	nama, email)
 	VALUES ('bbbb', 'bbbb@gmail.com');
 
-INSERT INTO User(
+INSERT INTO public."User"(
 	nama, email)
 	VALUES ('cccc', 'cccc@gmail.com');
 
-INSERT INTO User(
+INSERT INTO public."User"(
 	nama, email)
 	VALUES ('dddd', 'dddd@gmail.com');
 
-INSERT INTO User(
+INSERT INTO public."User"(
 	nama, email)
 	VALUES ('eeee', 'eeee@gmail.com');

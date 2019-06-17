@@ -7,6 +7,7 @@ jobs:
     working_directory: /tmp/project
     steps:
       - checkout
+      - setup_remote_docker
       - run:
           name: Execute Katalon Studio
           command: docker run -t --rm katalonstudio/katalon/katalon-execute.sh -browserType="Chrome" -retry=0 -statusDelay=15 -testSuitePath="Test Suites/TS_RegressionTest"

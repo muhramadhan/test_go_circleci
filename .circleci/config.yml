@@ -35,18 +35,19 @@ jobs:
       - run:
           name: Run server in background
           command: |
-            ./code/server &
+            ./code/server
+          background: true
 
       - run:
           name: Waiting for server to be ready
           command: |
-            for i in `seq 1 10`;
+            for i in `seq 1 60`;
             do
               nc -z localhost 3500 && echo Success && exit 0
               echo -n .
               sleep 1
             done
-            echo Failed waiting for serverr && exit 1
+            echo Failed waiting for server && exit 1
 
       - run:
           name: Katalon Test

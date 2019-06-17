@@ -41,7 +41,7 @@ jobs:
       - run:
           name: Waiting for server to be ready
           command: |
-            for i in `seq 1 120`;
+            for i in `seq 1 300`;
             do
               nc -z localhost 3500 && echo Success && exit 0
               echo -n .

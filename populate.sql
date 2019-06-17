@@ -20,9 +20,9 @@ CREATE DATABASE demo_circleci
 
 CREATE TABLE public."User"
 (
-    id integer NOT NULL DEFAULT nextval('"User_id_seq"'::regclass),
-    nama character varying(20) COLLATE pg_catalog."default" NOT NULL,
-    email character varying(25) COLLATE pg_catalog."default",
+    id SERIAL NOT NULL,
+    nama VARCHAR(20),
+    email VARCHAR(25),
     CONSTRAINT "User_pkey" PRIMARY KEY (id),
     CONSTRAINT unique_email UNIQUE (email)
 

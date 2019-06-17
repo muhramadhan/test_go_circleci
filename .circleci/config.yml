@@ -29,7 +29,7 @@ jobs:
           name: Seeding database
           command: |
             set PGPASSWORD=postgres
-            apt install postgresql-client
+            apt-get install -y postgresql-client
             psql --host localhost -U postgres < populate.sql
 
       - run:

@@ -85,5 +85,6 @@ func main() {
 	r.HandleFunc("/user/{id:[0-9]+}", UserInfo)
 	http.Handle("/", r)
 	//fmt.Println("DB: ", db)
-	http.ListenAndServe(":8080", nil)
+	fmt.Println("Starting server")
+	http.ListenAndServe(":3500", nil)
 }

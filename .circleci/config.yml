@@ -55,7 +55,7 @@ jobs:
       - run:
           name: Katalon Test
           command: |
-            katalon-execute.sh --args -noSplash  -runMode=console -consoleLog -projectPath="./demo_circleci.prj" -retry=0 -testSuiteCollectionPath="Test Suites/RegressionTest"
+            ./katalon/katalon-execute.sh --args -noSplash  -runMode=console -consoleLog -projectPath="./demo_circleci.prj" -retry=0 -testSuiteCollectionPath="Test Suites/RegressionTest"
 
       - persist_to_workspace:
           root: /tmp/project

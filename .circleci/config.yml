@@ -13,7 +13,7 @@ jobs:
           at: /tmp/project
       - restore_cache:
           key: go-mod-v1-{{ checksum "go.sum" }}
-      - run: apt install netcat curl
+      - run: apt update && apt install netcat curl
       - run:
           name: Waiting for Postgres to be ready
           command: |
@@ -29,8 +29,7 @@ jobs:
           name: Seeding database
           command: |
             set PGPASSWORD=postgres
-            sudo apt update
-            sudo apt install postgresql-client
+            apt install postgresql-client
             psql --host localhost -U postgres < populate.sql
 
       - run:

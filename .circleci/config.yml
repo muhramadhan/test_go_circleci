@@ -9,7 +9,7 @@ jobs:
           POSTGRES_DB: demo_circleci
     working_directory: /tmp/project
     steps:
-      - restorer_cache:
+      - restore_cache:
           key: go-mod-v1-{{ checksum "go.sum" }}
       - attach_workspace:
           at: /tmp/project
@@ -58,7 +58,6 @@ jobs:
   build:
     docker:
       - image: circleci/golang
-      - image: katalonstudio/katalon
     working_directory: /tmp/project
     steps:
       - checkout

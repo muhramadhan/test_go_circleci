@@ -51,7 +51,7 @@ jobs:
 
       - run:
           name: Katalon Test
-          command: katalon-execute.sh --args -noSplash  -runMode=console  -projectPath="demo_circleci.prj" -retry=0 -testSuiteCollectionPath="Test Suites/RegressionTest"
+          command: katalon-execute.sh --args -noSplash  -runMode=console  -projectPath="/tmp/project/demo_circleci.prj" -retry=0 -testSuiteCollectionPath="Test Suites/RegressionTest"
 
       - store_artifacts:
           path: code

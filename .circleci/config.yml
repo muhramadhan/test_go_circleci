@@ -9,10 +9,10 @@ jobs:
           POSTGRES_DB: demo_circleci
     working_directory: /tmp/project
     steps:
-      - restore_cache:
-          key: go-mod-v1-{{ checksum "go.sum" }}
       - attach_workspace:
           at: /tmp/project
+      - restore_cache:
+          key: go-mod-v1-{{ checksum "go.sum" }}
       - run:
           name: Waiting for Postgres to be ready
           command: |

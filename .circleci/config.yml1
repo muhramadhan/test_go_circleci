@@ -1,0 +1,71 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/golang
+    working_directory: /tmp/project
+    steps:
+      - restorer_caache:
+          key: go-mod-v1-{{ checksum "go.sum" }}
+      - attach_workspace:
+          at: /tmp/project
+      - run: go build -o code/server server.go
+      - store_artifacts:
+          path: code
+
+  test:
+    docker:
+      - image: circleci/golang
+      - image: circleci/postgres:9.6-alpine
+      - image: katalonstudio/katalon
+        environment:
+          POSTGRES_USER: postgres
+          POSTGRES_DB: demo_circleci
+    working_directory: /tmp/project
+    steps:
+      - checkout
+      - run: mkdir -p /tmp/workspace
+      - run: go get github.com/lib/pq
+      - run: go get github.com/gorilla/mux
+      - save_cache:
+          key: go-mod-v1-{{ checksum "go.sum" }}
+          paths:
+            - "/go/pkg/mod"
+
+      - run:
+          name: Waiting for Postgres to be ready
+          command: |
+            for i in `seq 1 10`;
+            do
+              nc -z localhost 5432 && echo Success && exit 0
+              echo -n .
+              sleep 1
+            done
+            echo Failed waiting for Postgres && exit 1
+
+      - run:
+          name: Seeding database
+          command: |
+            set PGPASSWORD=postgres
+            sudo apt install postgresql-client
+            psql --host localhost -U postgres < populate.sql
+
+      - run: go test
+      
+      - run:
+          name: Katalon Test
+          command: katalon-execute.sh -noSplash  -runMode=console -consoleLog -projectPath="./demo_circleci.prj" -retry=0 -testSuiteCollectionPath="Test Suites/RegressionTest"
+      - persist_to_workspace:
+          root: /tmp/project
+          paths: 
+            - ./
+            - go/github.com/
+
+workflows:
+  version: 2
+  test-build:
+    jobs:
+      - test
+      - build:
+          requires:
+            - test

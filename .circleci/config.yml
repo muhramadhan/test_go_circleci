@@ -9,7 +9,7 @@ jobs:
       - checkout
       - run:
           name: Execute Katalon Studio
-          command: katalon-execute.sh -browserType="Chrome" -retry=0 -statusDelay=15 -testSuitePath="Test Suites/TS_RegressionTest"
+          command: kdocker run -t --rm katalonstudio/katalon/katalon-execute.sh -browserType="Chrome" -retry=0 -statusDelay=15 -testSuitePath="Test Suites/TS_RegressionTest"
       - store-test_results:
           path: ./report
       - store-artifacts:

@@ -3,7 +3,7 @@ jobs:
   build:
     docker:
       - image: katalonstudio/katalon
-      - image: circle/golang
+      - image: circleci/golang
     working_directory: /tmp/project
     steps:
       - checkout

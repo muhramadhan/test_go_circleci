@@ -55,6 +55,8 @@ jobs:
 
       - store_artifacts:
           path: code
+      - store_artifacts:
+          path: report
 
   build:
     docker:

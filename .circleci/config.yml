@@ -51,7 +51,7 @@ jobs:
 
       - run:
           name: Katalon Test
-          command: katalon-execute.sh -browserType="Chrome" -retry=0 -statusDelay=15 -testSuiteCollectionPath="Test Suites/RegressionTest"
+          command: katalon-execute.sh --args -runMode=console -retry=0 -statusDelay=15 -testSuiteCollectionPath="Test Suites/RegressionTest"
 
       - store_artifacts:
           path: code

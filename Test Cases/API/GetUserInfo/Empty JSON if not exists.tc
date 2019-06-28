@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCaseEntity>
+   <description></description>
+   <name>Empty JSON if not exists</name>
+   <tag></tag>
+   <comment></comment>
+   <testCaseGuid>fceb142f-2322-4606-a459-2b67c1622ad5</testCaseGuid>
+</TestCaseEntity>

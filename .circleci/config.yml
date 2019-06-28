@@ -1,33 +1,92 @@
+version: 2
 jobs:
-  build:
+  test:
     docker:
-      - image: circleci/golang
+      - image: katalonstudio/katalon
+      - image: circleci/postgres:9.6-alpine
+        environment:
+          POSTGRES_USER: postgres
+          POSTGRES_DB: demo_circleci
     working_directory: /tmp/project
     steps:
       - attach_workspace:
           at: /tmp/project
-      - run: go build -o code/server server.go
+      - restore_cache:
+          key: go-mod-v1-{{ checksum "go.sum" }}
+      - run: apt-get update && apt-get install -y git netcat curl
+      - run:
+          name: Waiting for Postgres to be ready
+          command: |
+            for i in `seq 1 10`;
+            do
+              nc -z localhost 5432 && echo Success && exit 0
+              echo -n .
+              sleep 1
+            done
+            echo Failed waiting for Postgres && exit 1
+
+      - run:
+          name: Seeding database
+          command: |
+            set PGPASSWORD=postgres
+            apt-get install -y postgresql-client
+            psql --host localhost -U postgres < populate.sql
+
+      - run:
+          name: Run server in background
+          command: |
+            ./code/server
+          background: true
+
+      - run:
+          name: Waiting for server to be ready
+          command: |
+            for i in `seq 1 300`;
+            do
+              nc -z 127.0.0.1 3500 && echo Success && exit 0
+              echo -n .
+              sleep 1
+            done
+            echo Failed waiting for server && exit 1
+
+      - run:
+          name: Katalon Test
+          command: katalon-execute.sh -retry=0 -statusDelay=15 -testSuiteCollectionPath="Test Suites/RegressionTest"
+
       - store_artifacts:
           path: code
+      - store_artifacts:
+          path: report
 
-  test:
+  build:
     docker:
       - image: circleci/golang
     working_directory: /tmp/project
     steps:
       - checkout
       - run: mkdir -p /tmp/workspace
+      - run: go get github.com/lib/pq
+      - run: go get github.com/gorilla/mux
+      - save_cache:
+          key: go-mod-v1-{{ checksum "go.sum" }}
+          paths:
+            - "/go/pkg/mod"
+
       - run: go test
+
+      - run: go build -o code/server server.go
+      
       - persist_to_workspace:
           root: /tmp/project
           paths: 
             - ./
+            - go/github.com/
 
 workflows:
   version: 2
   test-build:
     jobs:
-      - test
-      - build:
+      - build
+      - test:
           requires:
-            - test
+            - build

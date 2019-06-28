@@ -55,6 +55,7 @@ func UserInfo(w http.ResponseWriter, r *http.Request) {
 	} else {
 		data = userStruct{Id: id, Name: nama, Email: email}
 	}
+	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	json.NewEncoder(w).Encode(data)
 }
 

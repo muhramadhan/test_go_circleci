@@ -17,11 +17,13 @@ import groovy.json.JsonSlurper as JsonSlurper
 
 response = WS.sendRequest(findTestObject('GetUserInfo', [('id') : 99999]))
 
-slurper = new JsonSlurper()
-
 data = response.getResponseText().trim()
 
+slurper = new JsonSlurper()
+
 WS.verifyResponseStatusCode(response, 200)
+
+WebUI.delay(30)
 
 WS.verifyMatch(data, '{}', false)
 

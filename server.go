@@ -18,6 +18,7 @@ const (
 	dbname   = "demo_circleci"
 )
 
+
 var db *sql.DB
 
 type userStruct struct {
